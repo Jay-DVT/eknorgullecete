@@ -15,10 +15,18 @@ const Navbar = () => {
 					<Image src={"/images/Knorr.png"} alt='Knorr' width={80} height={65} />
 				</div>
 				<div className='flex items-center gap-10 text-lg font-bold text-secondary'>
-					<a href='#hero'>Participa</a>
-					<a href='#howto'>Cómo participar</a>
-					<a href='#rewards'>Premios</a>
-					<a href='#products'>Productos participantes</a>
+					<a href='#hero' className='hover-underline-animation'>
+						Participa
+					</a>
+					<a href='#howto' className='hover-underline-animation'>
+						Cómo participar
+					</a>
+					<a href='#rewards' className='hover-underline-animation'>
+						Premios
+					</a>
+					<a href='#products' className='hover-underline-animation'>
+						Productos participantes
+					</a>
 				</div>
 			</div>
 			<Notifications />
