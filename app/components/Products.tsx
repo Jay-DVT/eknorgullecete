@@ -12,8 +12,8 @@ const Products = () => {
 					<Image
 						src={"/images/Products.png"}
 						alt='Premio'
-						width={420}
-						height={420}
+						width={720}
+						height={567}
 					/>
 				</div>
 			</div>

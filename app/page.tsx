@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import HowTo from "./components/HowTo";
 import Rewards from "./components/Rewards";
 import Products from "./components/Products";
+import Footer from "./components/Footer";
 
 export default function Home() {
 	return (
@@ -15,6 +16,7 @@ export default function Home() {
 			<HowTo />
 			<Rewards />
 			<Products />
+			<Footer />
 		</main>
 	);
 }
