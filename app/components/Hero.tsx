@@ -5,7 +5,7 @@ const Hero = () => {
 	return (
 		<section
 			id='hero'
-			className='h-[100%] w-screen bg-body bg-cover bg-center bg-no-repeat'
+			className='h-[100%] bg-body bg-cover bg-center bg-no-repeat'
 		>
 			<div className='flex flex-col-reverse items-center justify-center md:h-full md:flex-row md:gap-20 lg:gap-40'>
 				<SignIn />
