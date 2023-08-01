@@ -1,21 +1,29 @@
+"use client";
+
+import { useState } from "react";
+import Input from "react-phone-number-input/input";
+import type { E164Number } from "libphonenumber-js";
+
 const SignIn = () => {
+	const [value, setValue] = useState<E164Number>();
+
 	return (
-		<div className='h-fit w-fit rounded-3xl border-2 border-white bg-primary/60 text-center text-lg font-thin text-white'>
-			<div className='p-12'>
-				<p className='text-3xl font-bold'>REGISTRA TU TICKET</p>
-				<p className='p-6'>
+		<div className='text-md mx-5 mb-8 h-fit w-fit whitespace-normal rounded-3xl border-2 border-white bg-primary/60 text-center font-thin text-white lg:text-lg'>
+			<div className='p-3 md:p-8'>
+				<p className='text-2xl font-bold'>REGISTRA TU TICKET</p>
+				<p className='p-6 text-sm'>
 					Registra tus datos para participar. <br /> Mientras más registres más
 					oportunidades tendrás de ganar:
 				</p>
 				<form action='' method='post'>
-					<div className='flex flex-col gap-4'>
+					<div className=' flex flex-col gap-4 text-sm'>
 						<div>
 							<div className='flex flex-col gap-1 '>
 								<label className='text-left' htmlFor='email'>
 									CORREO ELECTRÓNICO
 								</label>
 								<input
-									className='rounded-full p-2 text-black'
+									className='rounded-full p-2 px-4 text-black'
 									type='email'
 									name='email'
 									id='email'
@@ -27,11 +35,11 @@ const SignIn = () => {
 								<label className='text-left' htmlFor='phone'>
 									NÚMERO DE TELÉFONO
 								</label>
-								<input
-									className='rounded-full p-2 text-black'
-									type='tel'
-									name='phone'
-									id='phone'
+								<Input
+									className='rounded-full p-2 px-4 text-black'
+									country='MX'
+									value={value}
+									onChange={setValue}
 								/>
 							</div>
 						</div>
@@ -41,10 +49,27 @@ const SignIn = () => {
 									FOLIO DEL TICKET DE COMPRA
 								</label>
 								<input
-									className='rounded-full p-2 text-black'
+									className='rounded-full p-2 px-4 text-black'
 									type='text'
 									name='folio'
 									id='folio'
+								/>
+								<p className='text-left text-xs'>
+									* Conserva tu ticket de compra en caso de que ganes uno de los
+									premios
+								</p>
+							</div>
+						</div>
+						<div>
+							<div className='flex flex-col gap-1'>
+								<label className='text-left' htmlFor='photo'>
+									SUBE TU TICKET
+								</label>
+								<input
+									className='rounded-full p-2 px-4 text-black'
+									type='file'
+									name='photo'
+									id='photo'
 								/>
 							</div>
 						</div>

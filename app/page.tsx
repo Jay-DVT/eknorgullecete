@@ -9,10 +9,10 @@ import DisplayNav from "./components/DisplayNav";
 
 export default function Home() {
 	return (
-		<main className='w-screen bg-lightgreen'>
+		<main className=' bg-lightgreen'>
 			{/* <DisplayNav /> */}
 			<div className='z-0'>
-				<div className='h-screen'>
+				<div className='flex h-fit flex-col md:h-[100vh]'>
 					<Navbar />
 					<Hero />
 				</div>
