@@ -8,7 +8,7 @@ const Rewards = () => {
 		>
 			<p className='pb-20'>Premios</p>
 			<div className='flex flex-col items-center gap-12'>
-				<div className='flex justify-center gap-60'>
+				<div className='flex flex-col justify-center gap-60 md:flex-row'>
 					<Image
 						src={"/images/Group11.png"}
 						alt='Premio'
@@ -23,7 +23,7 @@ const Rewards = () => {
 					/>
 				</div>
 				<Image
-					src={"/images/premio.png"}
+					src={"/images/premios_1.png"}
 					alt='Premio'
 					width={900}
 					height={225}

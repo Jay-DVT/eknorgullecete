@@ -2,9 +2,10 @@ const SignIn = () => {
 	return (
 		<div className='h-fit w-fit rounded-3xl border-2 border-white bg-primary/60 text-center text-lg font-thin text-white'>
 			<div className='p-12'>
-				<p className='text-3xl font-bold'>Inicia sesión para participar</p>
+				<p className='text-3xl font-bold'>REGISTRA TU TICKET</p>
 				<p className='p-6'>
-					Ingresa tus datos para <br /> iniciar sesión y registrar tu ticket
+					Registra tus datos para participar. <br /> Mientras más registres más
+					oportunidades tendrás de ganar:
 				</p>
 				<form action='' method='post'>
 					<div className='flex flex-col gap-4'>
@@ -15,7 +16,7 @@ const SignIn = () => {
 								</label>
 								<input
 									className='rounded-full p-2 text-black'
-									type='text'
+									type='email'
 									name='email'
 									id='email'
 								/>
@@ -28,9 +29,22 @@ const SignIn = () => {
 								</label>
 								<input
 									className='rounded-full p-2 text-black'
-									type='text'
+									type='tel'
 									name='phone'
 									id='phone'
+								/>
+							</div>
+						</div>
+						<div>
+							<div className='flex flex-col gap-1'>
+								<label className='text-left' htmlFor='folio'>
+									FOLIO DEL TICKET DE COMPRA
+								</label>
+								<input
+									className='rounded-full p-2 text-black'
+									type='text'
+									name='folio'
+									id='folio'
 								/>
 							</div>
 						</div>
@@ -38,17 +52,10 @@ const SignIn = () => {
 					{/* Button submit */}
 					<div className='p-4'>
 						<button className=' mt-4 rounded-full bg-secondary p-2 px-12 text-primary'>
-							Iniciar sesión
+							Siguiente
 						</button>
 					</div>
 				</form>
-				<p>
-					¿No tienes cuenta?
-					<span className='text-secondary hover:cursor-pointer'>
-						{" "}
-						Crea una cuenta
-					</span>{" "}
-				</p>
 			</div>
 		</div>
 	);

@@ -5,9 +5,9 @@ const Hero = () => {
 	return (
 		<section
 			id='hero'
-			className='h-screen w-full bg-body bg-cover bg-center bg-no-repeat'
+			className='h-screen w-screen bg-body bg-cover bg-center bg-no-repeat'
 		>
-			<div className='flex h-full items-center justify-center gap-40'>
+			<div className='flex h-full flex-col items-center justify-center gap-40 md:flex-row'>
 				<SignIn />
 				<Image
 					src={"/images/eKnorrgullecete.png"}
