@@ -1,16 +1,23 @@
 "use client";
 import Image from "next/image";
 import Notifications from "./Notifications";
+import useStore from "../hooks/sideNavStore";
 
-const Navbar = () => {
+function Navbar() {
 	function scrollIntoView(e: any, id: string) {
 		let element = document.getElementById(id);
 		e.preventDefault();
 		element?.scrollIntoView({ behavior: "smooth" });
 	}
 
+	const openSideNav = useStore((state) => state.toggleSideNav);
+
+	function handleShowMenu() {
+		openSideNav();
+	}
+
 	return (
-		<nav className='bg-primary'>
+		<nav className='fixed top-0 w-screen bg-primary md:static md:w-auto'>
 			<div className='relative mx-auto flex max-w-7xl justify-center p-2 md:justify-between'>
 				<div className='flex gap-5'>
 					<Image
@@ -35,6 +42,9 @@ const Navbar = () => {
 						position: "absolute",
 						top: "50%",
 						transform: "translateY(-50%)",
+					}}
+					onClick={() => {
+						handleShowMenu();
 					}}
 				>
 					<Image
@@ -80,6 +90,6 @@ const Navbar = () => {
 			<Notifications />
 		</nav>
 	);
-};
+}
 
 export default Navbar;
