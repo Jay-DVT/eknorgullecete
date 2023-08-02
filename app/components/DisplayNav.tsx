@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import useStore from "../hooks/sideNavStore";
+import { useEffect } from "react";
 
 const DisplayNav = () => {
 	const toggleSideNav = useStore((state) => state.toggleSideNav);
@@ -15,7 +16,7 @@ const DisplayNav = () => {
 	const displayNav = useStore((state) => state.isSideNavOpen);
 
 	return displayNav ? (
-		<div className=' fixed top-0 z-50 h-auto w-screen bg-primary '>
+		<div className=' fixed top-0 z-50 h-auto w-screen bg-primary transition-all duration-500 ease-out'>
 			<div className='flex flex-col'>
 				<div className=' flex flex-col items-end text-lg font-bold text-secondary [&>*]:border-secondary [&>a]:w-full [&>a]:border-b-2 [&>a]:px-3 [&>a]:py-3'>
 					<div className='mx-3 mt-3'>
