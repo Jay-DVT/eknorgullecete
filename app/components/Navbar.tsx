@@ -1,19 +1,33 @@
+"use client";
 import Image from "next/image";
 import Notifications from "./Notifications";
 
 const Navbar = () => {
+	function scrollIntoView(e: any, id: string) {
+		let element = document.getElementById(id);
+		e.preventDefault();
+		element?.scrollIntoView({ behavior: "smooth" });
+	}
+
 	return (
 		<nav className='bg-primary'>
 			<div className='relative mx-auto flex max-w-7xl justify-center p-2 md:justify-between'>
 				<div className='flex gap-5'>
 					<Image
-						className='hidden md:block'
+						className='hidden h-[65px] w-[178px] md:block'
 						src={"/images/BodegaAurrera.png"}
 						alt='Bodega Aurrera'
-						height={65}
-						width={178}
+						height={300}
+						width={300}
 					/>
-					<Image src={"/images/Knorr.png"} alt='Knorr' width={80} height={65} />
+					<Image
+						src={"/images/Knorr.png"}
+						alt='Knorr'
+						width={300}
+						height={300}
+						quality={100}
+						className='h-[65px] w-[80px]'
+					/>
 				</div>
 				<div
 					className='right-10 hover:cursor-pointer md:hidden'
@@ -31,16 +45,34 @@ const Navbar = () => {
 					/>
 				</div>
 				<div className='hidden items-center gap-10 text-lg font-bold text-secondary md:flex'>
-					<a href='#hero' className='hover-underline-animation'>
+					<a
+						href='/'
+						className='hover-underline-animation'
+						onClick={(e) => {
+							scrollIntoView(e, "hero");
+						}}
+					>
 						Participa
 					</a>
-					<a href='#howto' className='hover-underline-animation'>
+					<a
+						href='/'
+						className='hover-underline-animation'
+						onClick={(e) => scrollIntoView(e, "howto")}
+					>
 						Cómo participar
 					</a>
-					<a href='#rewards' className='hover-underline-animation'>
+					<a
+						href='/'
+						className='hover-underline-animation'
+						onClick={(e) => scrollIntoView(e, "rewards")}
+					>
 						Premios
 					</a>
-					<a href='#products' className='hover-underline-animation'>
+					<a
+						href='/'
+						className='hover-underline-animation'
+						onClick={(e) => scrollIntoView(e, "products")}
+					>
 						Productos participantes
 					</a>
 				</div>
