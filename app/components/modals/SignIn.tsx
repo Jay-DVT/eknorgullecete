@@ -8,15 +8,15 @@ const SignIn = () => {
 	const [value, setValue] = useState<E164Number>();
 
 	return (
-		<div className='text-md mx-5 mb-8 h-fit w-fit whitespace-normal rounded-3xl border-2 border-white bg-primary/60 text-center font-thin text-white lg:text-lg'>
+		<div className='mb-8 h-fit w-11/12 whitespace-normal rounded-3xl border-2 border-white bg-primary/60 text-center text-xs font-thin text-white md:w-fit md:text-base lg:text-lg'>
 			<div className='p-3 md:p-8'>
-				<p className='text-2xl font-bold'>REGISTRA TU TICKET</p>
-				<p className='p-6 text-sm'>
+				<p className='text-lg font-bold md:text-2xl'>REGISTRA TU TICKET</p>
+				<p className='py-4 '>
 					Registra tus datos para participar. <br /> Mientras más registres más
 					oportunidades tendrás de ganar:
 				</p>
 				<form action='' method='post'>
-					<div className=' flex flex-col gap-4 text-sm'>
+					<div className=' flex flex-col gap-4 '>
 						<div>
 							<div className='flex flex-col gap-1 '>
 								<label className='text-left' htmlFor='email'>
@@ -75,11 +75,9 @@ const SignIn = () => {
 						</div>
 					</div>
 					{/* Button submit */}
-					<div className='p-4'>
-						<button className=' mt-4 rounded-full bg-secondary p-2 px-12 text-primary'>
-							Siguiente
-						</button>
-					</div>
+					<button className=' mt-4 rounded-full bg-secondary p-2 p-4 px-12 text-primary'>
+						Siguiente
+					</button>
 				</form>
 			</div>
 		</div>

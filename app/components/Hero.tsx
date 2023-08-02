@@ -7,15 +7,17 @@ const Hero = () => {
 			id='hero'
 			className='h-[100%] bg-body bg-cover bg-center bg-no-repeat'
 		>
-			<div className='flex flex-col-reverse items-center justify-center md:h-full md:flex-row md:gap-20 lg:gap-40'>
+			<div className='mx-3 flex flex-col-reverse items-center justify-center md:h-full md:flex-row '>
 				<SignIn />
-				<Image
-					src={"/images/eKnorrgullecete.png"}
-					alt='Promo Logo'
-					width={743}
-					height={630}
-					className='m-4 mt-20'
-				/>
+				<div className='flex flex-shrink justify-center'>
+					<Image
+						src={"/images/eKnorrgullecete.png"}
+						alt='Promo Logo'
+						width={743}
+						height={630}
+						className='m-4 mt-20 w-5/6 '
+					/>
+				</div>
 			</div>
 		</section>
 	);
