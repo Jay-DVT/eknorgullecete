@@ -1,6 +1,6 @@
 const Footer = () => {
 	return (
-		<footer className='border-t-8 border-white bg-lightgreen p-14 text-center text-xl font-bold text-white'>
+		<footer className='border-t-8 border-white bg-lightgreen py-14 text-center text-xs font-bold text-white md:text-xl'>
 			<p>
 				<a href=''>Bases de la Promoción</a>&emsp;|&emsp;
 				<a href=''>Aviso de Privacidad</a>
