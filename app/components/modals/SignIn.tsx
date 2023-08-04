@@ -1,10 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "react-phone-number-input/input";
 import type { E164Number } from "libphonenumber-js";
 import useParticipationStore from "@/app/hooks/participationStore";
 import axios from "axios";
+
+interface CountAnimationProps {
+	targetNumber: number;
+	duration: number;
+}
+
+function CountAnimation({ targetNumber, duration }: CountAnimationProps) {
+	const [count, setCount] = useState<number>(0);
+
+	function formatNumberWithLeadingZeros(number: number) {
+		const roundedNumber = Math.round(number);
+		return String(roundedNumber).padStart(4, "0");
+	}
+
+	useEffect(() => {
+		let startTime: number | null = null;
+		let animationFrameId: number;
+
+		function animate(timestamp: number) {
+			if (!startTime) startTime = timestamp;
+			const progress = timestamp - startTime;
+			const increment = Math.floor((targetNumber / duration) * progress);
+
+			if (count + increment >= targetNumber) {
+				setCount(targetNumber);
+				cancelAnimationFrame(animationFrameId);
+			} else {
+				setCount(count + increment);
+				animationFrameId = requestAnimationFrame(animate);
+			}
+		}
+
+		animationFrameId = requestAnimationFrame(animate);
+
+		return () => cancelAnimationFrame(animationFrameId);
+	}, [count, targetNumber, duration]);
+
+	return (
+		<div className='py-5'>
+			Hasta el momento se han registrado <br />
+			<span className='text-lg text-secondary md:text-4xl'>
+				{formatNumberWithLeadingZeros(count)}{" "}
+			</span>
+			<br />
+			participaciones
+		</div>
+	);
+}
 
 const SignIn = () => {
 	const [phoneNumber, setPhoneNumber] = useState<E164Number>();
@@ -25,6 +73,8 @@ const SignIn = () => {
 		}
 		return false;
 	}
+
+	const currentParticipations = 122;
 
 	const handleSubmit = () => {
 		// TODO
@@ -61,12 +111,15 @@ const SignIn = () => {
 	};
 
 	return (
-		<div className='mb-8 h-fit w-11/12 whitespace-normal rounded-3xl border-2 border-white bg-primary/60 text-center text-xs font-thin text-white md:w-fit md:text-base lg:text-lg'>
+		<div className='mb-8 h-fit w-11/12 max-w-xl whitespace-normal rounded-3xl border-2 border-white bg-primary/60 text-center text-xs font-thin text-white md:w-fit md:text-base lg:text-lg'>
 			<div className='p-3 md:p-8'>
-				<p className='text-lg font-bold md:text-2xl'>REGISTRA TU TICKET</p>
-				<p className='py-4 '>
-					Registra tus datos para participar. <br /> Mientras más registres más
-					oportunidades tendrás de ganar:
+				<p className='text-lg font-bold md:text-3xl'>REGISTRA TU TICKET</p>
+				<CountAnimation targetNumber={currentParticipations} duration={1000} />
+				<p className='pb-4 '>
+					Registra tus datos y ticket para participar
+					<br />
+					Mientras más tickets registres, <br /> más oportunidades tienes de
+					ganar
 				</p>
 				<div className=' flex flex-col gap-4 '>
 					<div>
@@ -117,7 +170,7 @@ const SignIn = () => {
 								}}
 							/>
 						</div>
-						<p className='hidden text-left text-xs'>
+						<p className='whitespace-normal text-left text-xs'>
 							* Conserva tu ticket de compra en caso de que ganes uno de los
 							premios, el archivo debe ser menor a 5MB y en formato JPG, PNG o
 							JPEG
