@@ -36,8 +36,28 @@ body {
 	border: none;
 	font-size: 12px;
 	outline: none;
-	padding: 10px 25px;
+	padding: 8px 16px;
 	text-transform: uppercase;
-	transition: all 1s ease;
 	@apply rounded-full;
+}
+
+.togglenav {
+	max-height: 0;
+	transform: scaleY(0);
+	transform-origin: top;
+	transition: transform 0.26s ease-out;
+	transition: max-height 0.26s ease-out;
+	opacity: 0;
+
+	overflow: hidden;
+}
+
+.togglenav-open {
+	opacity: 1;
+	max-height: 100vh;
+	transform: scaleY(1);
+	transform-origin: top;
+	transition: opacity 0.26s ease-out;
+	transition: transform 0.26s ease-out;
+	transition: max-height 0.26s ease-out;
 }

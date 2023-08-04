@@ -112,7 +112,7 @@ const SignIn = () => {
 				</div>
 				{/* Button submit */}
 				<button
-					className=' mt-4 rounded-full bg-secondary p-2 px-4 text-primary disabled:cursor-not-allowed disabled:opacity-50 md:px-14'
+					className=' z-0 my-2 rounded-full bg-secondary p-2 px-4 text-primary disabled:cursor-not-allowed disabled:opacity-50 md:mt-4 md:px-14'
 					disabled={disableUpload()}
 					onClick={() => {
 						handleSubmit();
