@@ -3,12 +3,21 @@
 import { useState } from "react";
 import Input from "react-phone-number-input/input";
 import type { E164Number } from "libphonenumber-js";
+import useParticipationStore from "@/app/hooks/participationStore";
 import axios from "axios";
 
 const SignIn = () => {
 	const [phoneNumber, setPhoneNumber] = useState<E164Number>();
 	const [mail, setMail] = useState<string>("");
 	const [ticket, setTicket] = useState<File>();
+
+	const openParticipation = useParticipationStore(
+		(state) => state.toggleParticipation
+	);
+	const setStateMail = useParticipationStore((state) => state.setMail);
+	const setStatePhoneNumber = useParticipationStore(
+		(state) => state.setPhoneNumber
+	);
 
 	function ValidateEmail(mail: string) {
 		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -18,13 +27,18 @@ const SignIn = () => {
 	}
 
 	const handleSubmit = () => {
+		// TODO
 		// preventdefault
-
-		//phone number
-		console.log(phoneNumber);
-		//mail
-
+		if (!ticket) return;
+		console.log(ticket);
+		if (!mail) return;
 		console.log(mail);
+		if (!phoneNumber) return;
+		console.log(phoneNumber);
+		// send data to backend
+		setStateMail(mail);
+		setStatePhoneNumber(phoneNumber.toString());
+		openParticipation();
 	};
 
 	function verifyFile(file: File) {

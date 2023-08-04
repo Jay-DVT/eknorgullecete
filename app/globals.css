@@ -26,7 +26,7 @@
 }
 
 body {
-	background-color: #167c42;
+	@apply bg-lightgreen;
 }
 
 [type="file"]::-webkit-file-upload-button {
