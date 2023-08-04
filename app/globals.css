@@ -28,3 +28,16 @@
 body {
 	background-color: #167c42;
 }
+
+[type="file"]::-webkit-file-upload-button {
+	background: #fce52c;
+	color: #167c42;
+	cursor: pointer;
+	border: none;
+	font-size: 12px;
+	outline: none;
+	padding: 10px 25px;
+	text-transform: uppercase;
+	transition: all 1s ease;
+	@apply rounded-full;
+}

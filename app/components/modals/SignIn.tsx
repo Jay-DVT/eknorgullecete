@@ -27,6 +27,25 @@ const SignIn = () => {
 		console.log(mail);
 	};
 
+	function verifyFile(file: File) {
+		const validTypes = ["image/jpeg", "image/jpg", "image/png"];
+		if (validTypes.indexOf(file.type) === -1) {
+			return false;
+		}
+		return true;
+	}
+
+	const disableUpload = () => {
+		return (
+			!phoneNumber ||
+			phoneNumber.toString().length != 13 ||
+			!mail ||
+			!ValidateEmail(mail) ||
+			!ticket ||
+			!verifyFile(ticket)
+		);
+	};
+
 	return (
 		<div className='mb-8 h-fit w-11/12 whitespace-normal rounded-3xl border-2 border-white bg-primary/60 text-center text-xs font-thin text-white md:w-fit md:text-base lg:text-lg'>
 			<div className='p-3 md:p-8'>
@@ -72,23 +91,29 @@ const SignIn = () => {
 								SUBE TU TICKET
 							</label>
 							<input
-								className='rounded-full p-2 px-4 text-white'
+								className='rounded-full p-2 px-4 text-white hover:cursor-pointer'
 								type='file'
 								name='photo'
 								id='photo'
+								onChange={(e) => {
+									if (e.target.files) {
+										const file = e.target.files[0];
+										setTicket(file);
+									}
+								}}
 							/>
 						</div>
+						<p className='hidden text-left text-xs'>
+							* Conserva tu ticket de compra en caso de que ganes uno de los
+							premios, el archivo debe ser menor a 5MB y en formato JPG, PNG o
+							JPEG
+						</p>
 					</div>
 				</div>
 				{/* Button submit */}
 				<button
 					className=' mt-4 rounded-full bg-secondary p-2 px-4 text-primary disabled:cursor-not-allowed disabled:opacity-50 md:px-14'
-					disabled={
-						!phoneNumber ||
-						phoneNumber.toString().length != 13 ||
-						!mail ||
-						!ValidateEmail(mail)
-					}
+					disabled={disableUpload()}
 					onClick={() => {
 						handleSubmit();
 					}}
