@@ -10,6 +10,13 @@ const SignIn = () => {
 	const [mail, setMail] = useState<string>("");
 	const [ticket, setTicket] = useState<File>();
 
+	function ValidateEmail(mail: string) {
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+			return true;
+		}
+		return false;
+	}
+
 	const handleSubmit = () => {
 		// preventdefault
 
@@ -75,7 +82,13 @@ const SignIn = () => {
 				</div>
 				{/* Button submit */}
 				<button
-					className=' mt-4 rounded-full bg-secondary p-2 px-4 text-primary md:px-14  '
+					className=' mt-4 rounded-full bg-secondary p-2 px-4 text-primary disabled:cursor-not-allowed disabled:opacity-50 md:px-14'
+					disabled={
+						!phoneNumber ||
+						phoneNumber.toString().length != 13 ||
+						!mail ||
+						!ValidateEmail(mail)
+					}
 					onClick={() => {
 						handleSubmit();
 					}}
