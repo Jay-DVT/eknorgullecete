@@ -4,7 +4,7 @@ const Rewards = () => {
 	return (
 		<section
 			id='rewards'
-			className='h-fit bg-body bg-cover bg-center bg-no-repeat py-8 text-center text-3xl font-bold text-white md:p-16 md:text-5xl'
+			className='h-fit bg-secondarybody bg-cover bg-center bg-no-repeat py-8 text-center text-3xl font-bold text-white md:p-16 md:text-5xl'
 		>
 			<div>Premios</div>
 			<div className='flex justify-center'>

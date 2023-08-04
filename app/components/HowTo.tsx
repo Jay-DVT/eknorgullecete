@@ -4,13 +4,13 @@ const HowTo = () => {
 	return (
 		<section
 			id='howto'
-			className='border-y-8 border-white bg-lightgreen py-8 text-center text-3xl font-bold text-white md:p-16 md:text-5xl'
+			className='border-y-8 border-white bg-primary py-8 text-center text-3xl font-bold text-white md:p-16 md:text-5xl'
 		>
 			<div>Cómo Participar</div>
-			<div className='m-8 flex flex-col items-center justify-evenly gap-5 md:flex-row'>
+			<div className='my-8 flex flex-col items-center justify-evenly gap-7 md:flex-row md:gap-5'>
 				<div className='flex flex-col items-center gap-4'>
 					<Image
-						src={"/images/Compra.png"}
+						src={"/images/Compra_2.png"}
 						alt='Compra'
 						width={400}
 						height={400}
@@ -35,16 +35,18 @@ const HowTo = () => {
 						/>
 					</div>
 				</div>
-				<Image
-					src={"/images/Registra.png"}
-					alt='Registra'
-					width={400}
-					height={400}
-					className='w-60 md:w-96'
-				/>
 				<div className='flex flex-col items-center gap-4'>
 					<Image
-						src={"/images/Gana.png"}
+						src={"/images/Registra_2.png"}
+						alt='Registra'
+						width={400}
+						height={400}
+						className='w-60 md:w-96'
+					/>
+				</div>
+				<div className='flex flex-col items-center gap-4'>
+					<Image
+						src={"/images/Gana_2.png"}
 						alt='Gana'
 						width={400}
 						height={400}

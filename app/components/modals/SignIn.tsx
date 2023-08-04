@@ -8,9 +8,15 @@ import axios from "axios";
 const SignIn = () => {
 	const [phoneNumber, setPhoneNumber] = useState<E164Number>();
 	const [mail, setMail] = useState<string>("");
+	const [ticket, setTicket] = useState<File>();
 
 	const handleSubmit = () => {
+		// preventdefault
+
+		//phone number
 		console.log(phoneNumber);
+		//mail
+
 		console.log(mail);
 	};
 
@@ -69,8 +75,10 @@ const SignIn = () => {
 				</div>
 				{/* Button submit */}
 				<button
-					className=' mt-4 rounded-full bg-secondary p-2 px-4 text-primary md:px-14 '
-					onClick={handleSubmit}
+					className=' mt-4 rounded-full bg-secondary p-2 px-4 text-primary md:px-14  '
+					onClick={() => {
+						handleSubmit();
+					}}
 				>
 					Siguiente
 				</button>

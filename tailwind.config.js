@@ -14,6 +14,7 @@ module.exports = {
 			},
 			backgroundImage: {
 				body: "url('/images/background01.jpg')",
+				secondarybody: "url('/images/background03.jpg')",
 			},
 		},
 	},

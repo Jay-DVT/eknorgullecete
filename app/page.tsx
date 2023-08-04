@@ -14,7 +14,7 @@ export default function Home() {
 				<DisplayNav />
 			</div>
 			<div className='z-0'>
-				<div className='flex h-fit flex-col md:h-[100vh]'>
+				<div className='flex h-fit flex-col lg:h-[100vh]'>
 					<Navbar />
 					<Hero />
 				</div>

@@ -37,7 +37,7 @@ function Navbar() {
 					/>
 				</div>
 				<div
-					className='right-10 hover:cursor-pointer md:hidden'
+					className='right-10 hover:cursor-pointer lg:hidden'
 					style={{
 						position: "absolute",
 						top: "50%",
@@ -54,7 +54,7 @@ function Navbar() {
 						height={50}
 					/>
 				</div>
-				<div className='hidden items-center gap-10 text-lg font-bold text-secondary md:flex'>
+				<div className='hidden items-center gap-4 text-base font-bold text-secondary lg:flex lg:gap-10 lg:text-lg'>
 					<a
 						href='/'
 						className='hover-underline-animation'
