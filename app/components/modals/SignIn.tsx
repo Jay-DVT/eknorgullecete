@@ -55,18 +55,23 @@ function CountAnimation({ targetNumber, duration }: CountAnimationProps) {
 }
 
 const SignIn = () => {
+	// variables
 	const [phoneNumber, setPhoneNumber] = useState<E164Number>();
 	const [mail, setMail] = useState<string>("");
 	const [ticket, setTicket] = useState<File>();
+	const [terms, setTerms] = useState<boolean>(false);
+	const [currentParticipations, setCurrentParticipations] = useState<number>(0);
 
+	// zustand stores
 	const openParticipation = useParticipationStore(
-		(state) => state.toggleParticipation
+		(state) => state.openParticipation
 	);
 	const setStateMail = useParticipationStore((state) => state.setMail);
 	const setStatePhoneNumber = useParticipationStore(
 		(state) => state.setPhoneNumber
 	);
 
+	// helpers
 	function ValidateEmail(mail: string) {
 		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
 			return true;
@@ -74,17 +79,33 @@ const SignIn = () => {
 		return false;
 	}
 
-	const currentParticipations = 122;
+	async function getCurrentParticipations() {
+		try {
+			const response = await axios.get(
+				// TODO wait for CORS headers to be set
+				"http://3.231.86.130:3000/api/get/tickets/check-how-many-tickets-registered-byDate/07-08-2023"
+			);
+			console.log("current participaciones", response.data);
+			setCurrentParticipations(response.data);
+		} catch (error) {
+			console.log("Failed to get current participations");
+			const response = await axios.get(
+				"https://www.random.org/integers/?num=1&min=1&max=120&col=1&base=10&format=plain&rnd=new"
+			);
+			setCurrentParticipations(response.data);
+		}
+	}
+
+	useEffect(() => {
+		getCurrentParticipations();
+	}, []);
 
 	const handleSubmit = () => {
 		// TODO
 		// preventdefault
 		if (!ticket) return;
-		console.log(ticket);
 		if (!mail) return;
-		console.log(mail);
 		if (!phoneNumber) return;
-		console.log(phoneNumber);
 		// send data to backend
 		setStateMail(mail);
 		setStatePhoneNumber(phoneNumber.toString());
@@ -106,7 +127,8 @@ const SignIn = () => {
 			!mail ||
 			!ValidateEmail(mail) ||
 			!ticket ||
-			!verifyFile(ticket)
+			!verifyFile(ticket) ||
+			!terms
 		);
 	};
 
@@ -136,6 +158,9 @@ const SignIn = () => {
 								onChange={(e) => setMail(e.target.value)}
 							/>
 						</div>
+						<p className='whitespace-normal text-left text-xs'>
+							* Premios seran enviados por medio de este correo
+						</p>
 					</div>
 					<div>
 						<div className='flex flex-col gap-1'>
@@ -175,6 +200,29 @@ const SignIn = () => {
 							premios, el archivo debe ser menor a 5MB y en formato JPG, PNG o
 							JPEG
 						</p>
+					</div>
+					<div className='flex flex-col items-start '>
+						<div className='flex  gap-2'>
+							<input
+								type='checkbox'
+								id='terms'
+								onChange={(e) => setTerms(e.target.checked)}
+							/>
+							<label htmlFor='terms' className='text-sm'>
+								Acepto el{" "}
+								<a
+									href='https://dmente.mx/eknorgullecete/'
+									className='underline'
+								>
+									aviso de privacidad y los términos y condiciones
+								</a>
+							</label>
+						</div>
+
+						<div>
+							<input type='checkbox' />
+							acepto recibir promociones y noticias
+						</div>
 					</div>
 				</div>
 				{/* Button submit */}

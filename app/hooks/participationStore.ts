@@ -2,7 +2,8 @@ import { create } from "zustand";
 
 interface ParticipationProps {
 	isParticipationOpen: boolean;
-	toggleParticipation: () => void;
+	openParticipation: () => void;
+	closeParticipation: () => void;
 	participationNumber: number;
 	setParticipationNumber: (number: number) => void;
 	mail: string;
@@ -14,16 +15,14 @@ interface ParticipationProps {
 const useParticipationStore = create<ParticipationProps>((set) => ({
 	isParticipationOpen: false,
 	participationNumber: 0,
+	openParticipation: () => set({ isParticipationOpen: true }),
+	closeParticipation: () => set({ isParticipationOpen: false }),
 	mail: "",
 	phoneNumber: "",
-	toggleParticipation: () =>
-		set((state) => ({ isParticipationOpen: !state.isParticipationOpen })),
 	setParticipationNumber: (number: number) =>
 		set({ participationNumber: number }),
 	setMail: (mail: string) => set({ mail: mail }),
 	setPhoneNumber: (phoneNumber: string) => set({ phoneNumber: phoneNumber }),
 }));
-
-useParticipationStore.subscribe((state) => console.log("New state:", state));
 
 export default useParticipationStore;
