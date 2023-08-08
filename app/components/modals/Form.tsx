@@ -43,7 +43,7 @@ function CountAnimation({ targetNumber, duration }: CountAnimationProps) {
 	}, [count, targetNumber, duration]);
 
 	return (
-		<div className='py-5'>
+		<div className='py-3'>
 			Hasta el momento se han registrado <br />
 			<span className='text-lg text-secondary md:text-4xl'>
 				{formatNumberWithLeadingZeros(count)}{" "}
@@ -143,7 +143,7 @@ const Form = () => {
 				<p className='pb-4 '>
 					Registra tus datos y ticket para participar en la promoción
 				</p>
-				<div className=' flex flex-col gap-3 '>
+				<div className=' flex flex-col gap-4 '>
 					<div>
 						<div className='flex flex-col'>
 							<label className='text-left' htmlFor='email'>
@@ -217,13 +217,13 @@ const Form = () => {
 						</p>
 					</div>
 					<div className='flex flex-col items-start '>
-						<div className='flex  gap-2'>
+						<div className='text-left md:flex md:gap-2'>
 							<input
 								type='checkbox'
 								id='terms'
 								onChange={(e) => setTerms(e.target.checked)}
 							/>
-							<label htmlFor='terms' className='text-sm'>
+							<label htmlFor='terms' className=' mx-2 text-sm md:mx-0'>
 								Acepto el{" "}
 								<a
 									href='https://dmente.mx/eknorgullecete/'
@@ -234,10 +234,11 @@ const Form = () => {
 							</label>
 						</div>
 
-						<div className='flex gap-2'>
-							<input type='checkbox' id='communication' className='text-sm' />
-							<label htmlFor='communication' className='text-sm'>
-								Acepto recibir promociones y noticias
+						<div className='text-left md:flex md:gap-2'>
+							<input type='checkbox' id='communication' />
+							<label htmlFor='communication' className='mx-2 text-sm md:mx-0'>
+								Acepto recibir información y comunicación de Unilever y sus
+								marcas
 							</label>
 						</div>
 					</div>
