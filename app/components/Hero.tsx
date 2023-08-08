@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SignIn from "./modals/SignIn";
+import Form from "./modals/Form";
 
 const Hero = () => {
 	return (
@@ -8,7 +8,7 @@ const Hero = () => {
 			className='h-[100%] bg-body bg-cover bg-center bg-no-repeat'
 		>
 			<div className='mx-3 flex flex-col-reverse items-center justify-center lg:h-full lg:flex-row '>
-				<SignIn />
+				<Form />
 				<div className='flex flex-shrink justify-center'>
 					<Image
 						src={"/images/eKnorrgullecete.png"}

@@ -114,7 +114,7 @@ const Participation = () => {
 								del dia {new Date().toLocaleDateString()}.{" "}
 							</p>
 							{/* TODO agregar el recetario si no ganan algun premio */}
-							{reward != "" ? (
+							{reward == "" ? (
 								<div className='flex flex-col items-center'>
 									<Image
 										className='w-44 py-4 md:w-80'

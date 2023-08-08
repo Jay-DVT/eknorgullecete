@@ -14,7 +14,7 @@ export default function Home() {
 				<Participation />
 			</div>
 			<div className='z-0'>
-				<div className='flex h-fit flex-col lg:h-[100%]'>
+				<div className='flex h-fit flex-col'>
 					<Navbar />
 					<Hero />
 				</div>
