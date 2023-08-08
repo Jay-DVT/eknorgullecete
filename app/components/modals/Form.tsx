@@ -61,6 +61,7 @@ const SignIn = () => {
 	const [ticket, setTicket] = useState<File>();
 	const [terms, setTerms] = useState<boolean>(false);
 	const [currentParticipations, setCurrentParticipations] = useState<number>(0);
+	const [fullName, setFullName] = useState<string>("");
 
 	// zustand stores
 	const openParticipation = useParticipationStore(
@@ -101,14 +102,15 @@ const SignIn = () => {
 	}, []);
 
 	const handleSubmit = () => {
-		// TODO
 		// preventdefault
 		if (!ticket) return;
 		if (!mail) return;
 		if (!phoneNumber) return;
-		// send data to backend
+		if (fullName == "") return;
+		// save data to state
 		setStateMail(mail);
 		setStatePhoneNumber(phoneNumber.toString());
+		setFullName(fullName);
 		openParticipation();
 	};
 
@@ -128,47 +130,45 @@ const SignIn = () => {
 			!ValidateEmail(mail) ||
 			!ticket ||
 			!verifyFile(ticket) ||
-			!terms
+			!terms ||
+			fullName == ""
 		);
 	};
 
 	return (
-		<div className='mb-8 h-fit w-11/12 max-w-xl whitespace-normal rounded-3xl border-2 border-white bg-primary/60 text-center text-xs font-thin text-white md:w-fit md:text-base lg:text-lg'>
+		<div className='my-8 h-fit w-11/12 max-w-xl whitespace-normal rounded-3xl border-2 border-white bg-primary/60 text-center text-xs font-thin text-white md:w-fit md:text-base  lg:text-lg'>
 			<div className='p-3 md:p-8'>
 				<p className='text-lg font-bold md:text-3xl'>REGISTRA TU TICKET</p>
 				<CountAnimation targetNumber={currentParticipations} duration={1000} />
 				<p className='pb-4 '>
-					Registra tus datos y ticket para participar
-					<br />
-					Mientras más tickets registres, <br /> más oportunidades tienes de
-					ganar
+					Registra tus datos y ticket para participar en la promoción
 				</p>
-				<div className=' flex flex-col gap-4 '>
+				<div className=' flex flex-col gap-3 '>
 					<div>
-						<div className='flex flex-col gap-1 '>
+						<div className='flex flex-col'>
 							<label className='text-left' htmlFor='email'>
 								CORREO ELECTRÓNICO
 							</label>
 							<input
-								className='rounded-full p-2 px-4 text-black'
+								className='rounded-full p-[2px] px-4 text-black'
 								type='email'
 								name='email'
 								id='email'
 								value={mail}
 								onChange={(e) => setMail(e.target.value)}
 							/>
+							<p className='mt-[2px] whitespace-normal text-left text-xs'>
+								* Los premios seran enviados por medio de este correo
+							</p>
 						</div>
-						<p className='whitespace-normal text-left text-xs'>
-							* Premios seran enviados por medio de este correo
-						</p>
 					</div>
 					<div>
-						<div className='flex flex-col gap-1'>
+						<div className='flex flex-col'>
 							<label className='text-left' htmlFor='phone'>
 								NÚMERO DE TELÉFONO
 							</label>
 							<Input
-								className='rounded-full p-2 px-4 text-black'
+								className='rounded-full p-[2px] px-4 text-black'
 								country='MX'
 								name='phone'
 								id='phone'
@@ -178,12 +178,27 @@ const SignIn = () => {
 						</div>
 					</div>
 					<div>
-						<div className='flex flex-col gap-1'>
+						<div className='flex flex-col'>
+							<label className='text-left' htmlFor='email'>
+								NOMBRE COMPLETO
+							</label>
+							<input
+								className='rounded-full p-[2px] px-4 text-black'
+								type='text'
+								name='fullName'
+								id='fullName'
+								value={fullName}
+								onChange={(e) => setFullName(e.target.value)}
+							/>
+						</div>
+					</div>
+					<div>
+						<div className='flex flex-col'>
 							<label className='text-left' htmlFor='photo'>
 								SUBE TU TICKET
 							</label>
 							<input
-								className='rounded-full p-2 px-4 text-white hover:cursor-pointer'
+								className='m-[6px] rounded-full px-4 text-white hover:cursor-pointer'
 								type='file'
 								name='photo'
 								id='photo'
@@ -196,9 +211,9 @@ const SignIn = () => {
 							/>
 						</div>
 						<p className='whitespace-normal text-left text-xs'>
-							* Conserva tu ticket de compra en caso de que ganes uno de los
-							premios, el archivo debe ser menor a 5MB y en formato JPG, PNG o
-							JPEG
+							* Recuerda que para poder entregarte tus premios es necesario
+							tener tu ticket de compra a la mano, el archivo debe ser menor a
+							5MB y en formato JPG, PNG o JPEG
 						</p>
 					</div>
 					<div className='flex flex-col items-start '>
@@ -219,9 +234,11 @@ const SignIn = () => {
 							</label>
 						</div>
 
-						<div>
-							<input type='checkbox' />
-							acepto recibir promociones y noticias
+						<div className='flex gap-2'>
+							<input type='checkbox' id='communication' className='text-sm' />
+							<label htmlFor='communication' className='text-sm'>
+								Acepto recibir promociones y noticias
+							</label>
 						</div>
 					</div>
 				</div>

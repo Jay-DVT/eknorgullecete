@@ -10,6 +10,8 @@ interface ParticipationProps {
 	setMail: (mail: string) => void;
 	phoneNumber: string;
 	setPhoneNumber: (phoneNumber: string) => void;
+	fullName: string;
+	setFullName: (fullName: string) => void;
 }
 
 const useParticipationStore = create<ParticipationProps>((set) => ({
@@ -19,10 +21,12 @@ const useParticipationStore = create<ParticipationProps>((set) => ({
 	closeParticipation: () => set({ isParticipationOpen: false }),
 	mail: "",
 	phoneNumber: "",
+	fullName: "",
 	setParticipationNumber: (number: number) =>
 		set({ participationNumber: number }),
 	setMail: (mail: string) => set({ mail: mail }),
 	setPhoneNumber: (phoneNumber: string) => set({ phoneNumber: phoneNumber }),
+	setFullName: (fullName: string) => set({ fullName: fullName }),
 }));
 
 export default useParticipationStore;
