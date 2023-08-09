@@ -7,9 +7,9 @@ import axios from "axios";
 
 const Participation = () => {
 	// TODO: Remove this testReward and testRewardImage
-	const [mail, setMail] = useState<string>("");
-	const [participationNumber, setParticipationNumber] = useState<number>(0);
-	const [reward, setReward] = useState<string>("");
+	const [responseReward, setResponseReward] = useState<string>("");
+	const [responsePosition, setResponsePosition] = useState<number>(0);
+
 	const testRewardImage = "/images/premios_1.png";
 
 	const [loading, setLoading] = useState<boolean>(true);
@@ -29,57 +29,51 @@ const Participation = () => {
 	const ParticpationNumber = useParticipationStore(
 		(state) => state.participationNumber
 	);
+	const Reward = useParticipationStore((state) => state.reward);
+	const setReward = useParticipationStore((state) => state.setReward);
+	const setMailState = useParticipationStore((state) => state.setMail);
+	const setPhoneNumber = useParticipationStore((state) => state.setPhoneNumber);
+	const setParticipationNumber = useParticipationStore(
+		(state) => state.setParticipationNumber
+	);
 
 	const makePostCall = async (): Promise<[number, string]> => {
+		setLoading(true);
 		console.log("making post call");
-
-		// TODO make POST call with proper content
-		// dummy wait time
-		await new Promise((resolve) => setTimeout(resolve, 2000));
-		// TODO change this to the actual call
-		async function getCurrentParticipations() {
-			try {
-				const response = await axios.get(
-					// TODO wait for CORS headers to be set
-					"http://3.231.86.130:3000/api/get/tickets/check-how-many-tickets-registered-byDate/07-08-2023"
-				);
-				console.log("current participaciones", response.data);
-				return response.data + 1;
-			} catch (error) {
-				console.log("Failed to get current participations");
-				const response = await axios.get(
-					"https://www.random.org/integers/?num=1&min=1&max=120&col=1&base=10&format=plain&rnd=new"
-				);
-				return response.data + 1;
-			}
-		}
-		const ticketNumber = await getCurrentParticipations();
-		// TODO
-		const reward = "Cashi $30";
-		return [ticketNumber, ""];
+		if (!PhoneNumber) return [0, ""];
+		console.log("making call");
+		await axios
+			.post(
+				"http://3.231.86.130:3000/api/post/tickets/ticket-upload",
+				{
+					user_number: PhoneNumber,
+					//TODO link S3
+					ticket_url: "placeholder",
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			)
+			.then((response) => {
+				const json = JSON.parse(response.data);
+				setPhoneNumber("");
+				setResponsePosition(json.ticket_position);
+				setResponseReward(json.ticket_prize_description);
+			})
+			.catch((error) => {
+				console.log("Failed to make post call");
+				return [0, ""];
+			});
+		setLoading(false);
+		return [0, ""];
 	};
 
 	useEffect(() => {
-		// TODO get the participation number and reward from the API
-		setLoading(true);
-		const mail: string = Mail;
-		const phoneNumber = PhoneNumber;
-
-		if (mail === "") {
-			return;
-		}
-
-		makePostCall()
-			.then((response: [number, string]) => {
-				setParticipationNumber(response[0]);
-				setReward(response[1]);
-				setMail(mail);
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.log("Failed to get participation number and reward");
-				setLoading(false);
-			});
+		makePostCall().catch((error) => {
+			setLoading(false);
+		});
 	}, [participation, closeParticipation]);
 
 	return (
@@ -110,11 +104,11 @@ const Participation = () => {
 							<p className='py-4 '>
 								Se ha registrado correctamente tu ticket, fuiste el <br />{" "}
 								participante{" "}
-								<span className='text-secondary'> #{participationNumber} </span>{" "}
+								<span className='text-secondary'> #{responsePosition} </span>{" "}
 								del dia {new Date().toLocaleDateString()}.{" "}
 							</p>
 							{/* TODO agregar el recetario si no ganan algun premio */}
-							{reward == "" ? (
+							{Reward == "" ? (
 								<div className='flex flex-col items-center'>
 									<Image
 										className='w-44 py-4 md:w-80'
@@ -125,11 +119,11 @@ const Participation = () => {
 									/>
 									<p>
 										Eres el posible ganador de{" "}
-										<span className='text-secondary'>{reward}</span>. Un mail
-										con los detalles de tu premio será enviado a tu correo
+										<span className='text-secondary'>{responseReward}</span>. Un
+										mail con los detalles de tu premio será enviado a tu correo
 										electrónico registrado:
 										<br />
-										<span className='text-secondary'>{mail}.</span>
+										<span className='text-secondary'>{Mail}.</span>
 										<br />{" "}
 										<span className='text-xs'>
 											Recuerda checar tu bandeja de spam.

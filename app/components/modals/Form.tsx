@@ -81,12 +81,13 @@ const Form = () => {
 	}
 
 	async function getCurrentParticipations() {
+		console.log("getting current participations");
 		try {
+			console.log("getting current participations");
 			const response = await axios.get(
-				// TODO wait for CORS headers to be set
-				"http://3.231.86.130:3000/api/get/tickets/check-how-many-tickets-registered-byDate/07-08-2023"
+				// TODO change so that it is today
+				"http://3.231.86.130:3000/api/get/tickets/check-how-many-tickets-registered-byDate/09-08-2023"
 			);
-			console.log("current participaciones", response.data);
 			setCurrentParticipations(response.data);
 		} catch (error) {
 			console.log("Failed to get current participations");

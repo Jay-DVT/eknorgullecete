@@ -12,6 +12,8 @@ interface ParticipationProps {
 	setPhoneNumber: (phoneNumber: string) => void;
 	fullName: string;
 	setFullName: (fullName: string) => void;
+	reward: string;
+	setReward: (reward: string) => void;
 }
 
 const useParticipationStore = create<ParticipationProps>((set) => ({
@@ -22,11 +24,13 @@ const useParticipationStore = create<ParticipationProps>((set) => ({
 	mail: "",
 	phoneNumber: "",
 	fullName: "",
+	reward: "",
 	setParticipationNumber: (number: number) =>
 		set({ participationNumber: number }),
 	setMail: (mail: string) => set({ mail: mail }),
 	setPhoneNumber: (phoneNumber: string) => set({ phoneNumber: phoneNumber }),
 	setFullName: (fullName: string) => set({ fullName: fullName }),
+	setReward: (reward: string) => set({ reward: reward }),
 }));
 
 export default useParticipationStore;
