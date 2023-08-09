@@ -83,11 +83,16 @@ const Form = () => {
 	async function getCurrentParticipations() {
 		console.log("getting current participations");
 		try {
-			console.log("getting current participations");
-			const response = await axios.get(
-				// TODO change so that it is today
-				"http://3.231.86.130:3000/api/get/tickets/check-how-many-tickets-registered-byDate/09-08-2023"
-			);
+			// get todays date in dd-mm-yyyy format
+			const today = new Date();
+			const dd = String(today.getDate()).padStart(2, "0");
+			const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+			const yyyy = today.getFullYear();
+			const todayDate = dd + "-" + mm + "-" + yyyy;
+			const httplink =
+				"http://3.231.86.130:3000/api/get/tickets/check-how-many-tickets-registered-byDate/" +
+				todayDate;
+			const response = await axios.get(httplink);
 			setCurrentParticipations(response.data);
 		} catch (error) {
 			console.log("Failed to get current participations");
