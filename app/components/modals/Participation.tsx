@@ -39,9 +39,7 @@ const Participation = () => {
 
 	const makePostCall = async (): Promise<[number, string]> => {
 		setLoading(true);
-		console.log("making post call");
 		if (!PhoneNumber) return [0, ""];
-		console.log("making call");
 		await axios
 			.post(
 				"http://3.231.86.130:3000/api/post/tickets/ticket-upload",
@@ -117,12 +115,21 @@ const Participation = () => {
 										height={500}
 										alt='Premio'
 									/>
+									{responseReward.includes("pdf") ? (
+										<p>
+											Felicidades haz ganado un
+											<span>recetario digital</span>. Un mail con tu premio ha
+											sido enviado a tu correo electrónico registrado:
+										</p>
+									) : (
+										<p>
+											Eres el posible ganador de{" "}
+											<span className='text-secondary'>{responseReward}</span>.
+											Un mail con los detalles de tu premio será enviado a tu
+											correo electrónico registrado:
+										</p>
+									)}
 									<p>
-										Eres el posible ganador de{" "}
-										<span className='text-secondary'>{responseReward}</span>. Un
-										mail con los detalles de tu premio será enviado a tu correo
-										electrónico registrado:
-										<br />
 										<span className='text-secondary'>{Mail}.</span>
 										<br />{" "}
 										<span className='text-xs'>
