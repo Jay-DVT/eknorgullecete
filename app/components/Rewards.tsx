@@ -15,7 +15,7 @@ const Rewards = () => {
 						width={600}
 						height={529.8}
 						quality={100}
-						className=''
+						className='h-auto w-auto'
 					/>
 					<Image
 						src={"/images/premios_2.png"}
@@ -23,7 +23,7 @@ const Rewards = () => {
 						width={600}
 						height={166.4}
 						quality={100}
-						className=''
+						className='h-auto w-auto'
 					/>
 				</div>
 			</div>

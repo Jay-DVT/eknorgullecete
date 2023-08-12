@@ -81,7 +81,6 @@ const Form = () => {
 	}
 
 	async function getCurrentParticipations() {
-		console.log("getting current participations");
 		try {
 			// get todays date in dd-mm-yyyy format
 			const today = new Date();
@@ -95,11 +94,7 @@ const Form = () => {
 			const response = await axios.get(httplink);
 			setCurrentParticipations(response.data);
 		} catch (error) {
-			console.log("Failed to get current participations");
-			const response = await axios.get(
-				"https://www.random.org/integers/?num=1&min=1&max=120&col=1&base=10&format=plain&rnd=new"
-			);
-			setCurrentParticipations(response.data);
+			setCurrentParticipations(0);
 		}
 	}
 

@@ -24,6 +24,7 @@ const Participation = () => {
 	);
 
 	// Request information
+	const FullName = useParticipationStore((state) => state.fullName);
 	const Mail = useParticipationStore((state) => state.mail);
 	const PhoneNumber = useParticipationStore((state) => state.phoneNumber);
 	const ParticpationNumber = useParticipationStore(
@@ -37,9 +38,56 @@ const Participation = () => {
 		(state) => state.setParticipationNumber
 	);
 
+	function mapImage(input: string): string {
+		const mapping: { [key: string]: string } = {
+			Cashi: "Cupón Cashi",
+			recetario: "recetario",
+			Pantalla: "TVHISENSE40",
+			Tarjeta: "Tarjeta65,000",
+		};
+
+		for (const key in mapping) {
+			if (input.includes(key)) {
+				return mapping[key];
+			}
+		}
+
+		return input;
+	}
+
 	const makePostCall = async (): Promise<[number, string]> => {
-		setLoading(true);
 		if (!PhoneNumber) return [0, ""];
+		setLoading(true);
+		// TODO Check if user already exists, wait for single api call
+		const httpUser =
+			"http://3.231.86.130:3000/api/get/users/byNumber/" + PhoneNumber;
+		await axios.get(httpUser).catch((response) => {
+			console.log(response);
+		});
+
+		// check if 5 tickets have been used
+		const http =
+			"http://3.231.86.130:3000/api/get/users/check-if-user-max-five-today-byUserNumber/" +
+			PhoneNumber;
+		await axios
+			.get(http)
+			.then((response) => {
+				const json = JSON.parse(response.data);
+				console.log(json);
+				if (json.max_five === "true") {
+					setLoading(false);
+					// Show correct description
+					setResponseReward("max_participations");
+					console.log("Max participations");
+					return [0, ""];
+				}
+			})
+			.catch((error) => {
+				if (error != 404) {
+					return [0, ""];
+				}
+			});
+
 		await axios
 			.post(
 				"http://3.231.86.130:3000/api/post/tickets/ticket-upload",
@@ -96,55 +144,57 @@ const Participation = () => {
 									}}
 								/>
 							</div>
-							<p className='text-lg font-bold text-secondary md:text-3xl'>
-								MUCHAS GRACIAS POR PARTICIPAR
-							</p>
-							<p className='py-4 '>
-								Se ha registrado correctamente tu ticket, fuiste el <br />{" "}
-								participante{" "}
-								<span className='text-secondary'> #{responsePosition} </span>{" "}
-								del dia {new Date().toLocaleDateString()}.{" "}
-							</p>
-							{/* TODO agregar el recetario si no ganan algun premio */}
-							{Reward == "" ? (
-								<div className='flex flex-col items-center'>
-									<Image
-										className='w-44 py-4 md:w-80'
-										src={testRewardImage}
-										width={500}
-										height={500}
-										alt='Premio'
-									/>
-									{responseReward.includes("pdf") ? (
-										<p>
-											Felicidades haz ganado un
-											<span>recetario digital</span>. Un mail con tu premio ha
-											sido enviado a tu correo electrónico registrado:
-										</p>
-									) : (
-										<p>
-											Eres el posible ganador de{" "}
-											<span className='text-secondary'>{responseReward}</span>.
-											Un mail con los detalles de tu premio será enviado a tu
-											correo electrónico registrado:
-										</p>
-									)}
-									<p>
-										<span className='text-secondary'>{Mail}.</span>
-										<br />{" "}
-										<span className='text-xs'>
-											Recuerda checar tu bandeja de spam.
-										</span>
-									</p>
+							{responseReward == "max_participations" ? (
+								<div>
+									Una disculpa, solo se aceptan 5 tickets por persona al dia.{" "}
 								</div>
 							) : (
-								<p>
-									Desafortunadamente no fuiste acreedor a un premio, pero no te
-									desanimes, puedes seguir participando.
-								</p>
+								<div>
+									<p className='text-lg font-bold text-secondary md:text-3xl'>
+										MUCHAS GRACIAS POR PARTICIPAR
+									</p>
+									<p className='py-4 '>
+										Se ha registrado correctamente tu ticket, fuiste el <br />{" "}
+										participante{" "}
+										<span className='text-secondary'>
+											{" "}
+											#{responsePosition}{" "}
+										</span>{" "}
+										del dia {new Date().toLocaleDateString()}.{" "}
+									</p>
+									{/* TODO agregar el recetario si no ganan algun premio */}
+									<div className='flex flex-col items-center'>
+										<Image
+											className='w-44 py-4 md:w-80'
+											src={"/images/" + mapImage(responseReward) + ".png"}
+											width={500}
+											height={500}
+											alt='Premio'
+										/>
+										{responseReward.includes("pdf") ? (
+											<p>
+												Felicidades haz ganado un
+												<span>recetario digital</span>. Un mail con tu premio ha
+												sido enviado a tu correo electrónico registrado:
+											</p>
+										) : (
+											<p>
+												Eres el posible ganador de{" "}
+												<span className='text-secondary'>{responseReward}</span>
+												. Un mail con los detalles de tu premio será enviado a
+												tu correo electrónico registrado:
+											</p>
+										)}
+										<p>
+											<span className='text-secondary'>{Mail}.</span>
+											<br />{" "}
+											<span className='text-xs'>
+												Recuerda checar tu bandeja de spam.
+											</span>
+										</p>
+									</div>
+								</div>
 							)}
-
-							<div className=' flex flex-col gap-4 '></div>
 						</div>
 					</div>
 				)}
