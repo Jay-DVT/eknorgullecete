@@ -56,6 +56,7 @@ const Participation = () => {
 	}
 
 	const makePostCall = async (): Promise<[number, string]> => {
+		setResponseReward("error");
 		if (!PhoneNumber) return [0, ""];
 		setLoading(true);
 		// TODO Check if user already exists, wait for single api call
@@ -110,6 +111,7 @@ const Participation = () => {
 			})
 			.catch((error) => {
 				console.log("Failed to make post call");
+				setResponseReward("error");
 				return [0, ""];
 			});
 		setLoading(false);
@@ -144,32 +146,36 @@ const Participation = () => {
 									}}
 								/>
 							</div>
-							{responseReward == "max_participations" ? (
+
+							{responseReward == "error" ? (
 								<div>
-									Una disculpa, solo se aceptan 5 tickets por persona al dia.{" "}
+									Encontramos un error con tu respuesta, vuelve a intentar en
+									unos minutos
+								</div>
+							) : responseReward == "max_participations" ? (
+								<div>
+									Una disculpa, solo se aceptan 5 tickets por persona al dia.
 								</div>
 							) : (
 								<div>
 									<p className='text-lg font-bold text-secondary md:text-3xl'>
 										MUCHAS GRACIAS POR PARTICIPAR
 									</p>
-									<p className='py-4 '>
-										Se ha registrado correctamente tu ticket, fuiste el <br />{" "}
+									<p className='py-4'>
+										Se ha registrado correctamente tu ticket, fuiste el <br />
 										participante{" "}
 										<span className='text-secondary'>
-											{" "}
-											#{responsePosition}{" "}
+											#{responsePosition}
 										</span>{" "}
-										del dia {new Date().toLocaleDateString()}.{" "}
+										del dia {new Date().toLocaleDateString()}.
 									</p>
-									{/* TODO agregar el recetario si no ganan algun premio */}
 									<div className='flex flex-col items-center'>
 										<Image
 											className='w-44 py-4 md:w-80'
 											src={"/images/" + mapImage(responseReward) + ".png"}
 											width={500}
 											height={500}
-											alt='Premio'
+											alt={responseReward}
 										/>
 										{responseReward.includes("pdf") ? (
 											<p>
@@ -179,15 +185,15 @@ const Participation = () => {
 											</p>
 										) : (
 											<p>
-												Eres el posible ganador de{" "}
+												Eres el posible ganador de
 												<span className='text-secondary'>{responseReward}</span>
 												. Un mail con los detalles de tu premio será enviado a
 												tu correo electrónico registrado:
 											</p>
 										)}
 										<p>
-											<span className='text-secondary'>{Mail}.</span>
-											<br />{" "}
+											<span className='text-secondary'>{Mail}</span>
+											<br />
 											<span className='text-xs'>
 												Recuerda checar tu bandeja de spam.
 											</span>
@@ -202,5 +208,4 @@ const Participation = () => {
 		)
 	);
 };
-
 export default Participation;
