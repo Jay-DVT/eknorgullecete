@@ -40,10 +40,10 @@ const Participation = () => {
 
 	function mapImage(input: string): string {
 		const mapping: { [key: string]: string } = {
-			Cashi: "Cupón Cashi",
+			Cashi: "cuponcashi",
 			recetario: "recetario",
 			Pantalla: "TVHISENSE40",
-			Tarjeta: "Tarjeta65,000",
+			Tarjeta: "Tarjeta65",
 		};
 
 		for (const key in mapping) {
