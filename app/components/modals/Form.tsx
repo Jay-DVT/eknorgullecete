@@ -71,6 +71,7 @@ const Form = () => {
 	const setStatePhoneNumber = useParticipationStore(
 		(state) => state.setPhoneNumber
 	);
+	const setImageFile = useParticipationStore((state) => state.setImageFile);
 
 	// helpers
 	function ValidateEmail(mail: string) {
@@ -109,6 +110,7 @@ const Form = () => {
 		if (!phoneNumber) return;
 		if (fullName == "") return;
 		// save data to state
+		setImageFile(ticket);
 		setStateMail(mail);
 		setStatePhoneNumber(phoneNumber.toString());
 		setFullName(fullName);

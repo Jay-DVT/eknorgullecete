@@ -1,9 +1,11 @@
 import { create } from "zustand";
 
 interface ParticipationProps {
+	// Modal management
 	isParticipationOpen: boolean;
 	openParticipation: () => void;
 	closeParticipation: () => void;
+	// Form information
 	participationNumber: number;
 	setParticipationNumber: (number: number) => void;
 	mail: string;
@@ -12,8 +14,9 @@ interface ParticipationProps {
 	setPhoneNumber: (phoneNumber: string) => void;
 	fullName: string;
 	setFullName: (fullName: string) => void;
-	reward: string;
-	setReward: (reward: string) => void;
+	//Image section
+	imageFile: File | null;
+	setImageFile: (file: File) => void;
 }
 
 const useParticipationStore = create<ParticipationProps>((set) => ({
@@ -24,13 +27,13 @@ const useParticipationStore = create<ParticipationProps>((set) => ({
 	mail: "",
 	phoneNumber: "",
 	fullName: "",
-	reward: "",
+	imageFile: null,
 	setParticipationNumber: (number: number) =>
 		set({ participationNumber: number }),
 	setMail: (mail: string) => set({ mail: mail }),
 	setPhoneNumber: (phoneNumber: string) => set({ phoneNumber: phoneNumber }),
 	setFullName: (fullName: string) => set({ fullName: fullName }),
-	setReward: (reward: string) => set({ reward: reward }),
+	setImageFile: (file) => set({ imageFile: file }),
 }));
 
 export default useParticipationStore;

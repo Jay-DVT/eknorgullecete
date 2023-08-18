@@ -7,12 +7,10 @@ import axios from "axios";
 
 const Participation = () => {
 	// TODO: Remove this testReward and testRewardImage
+	const [loading, setLoading] = useState<boolean>(true);
+
 	const [responseReward, setResponseReward] = useState<string>("");
 	const [responsePosition, setResponsePosition] = useState<number>(0);
-
-	const testRewardImage = "/images/premios_1.png";
-
-	const [loading, setLoading] = useState<boolean>(true);
 
 	// stores
 	// Modal Management
@@ -30,8 +28,7 @@ const Participation = () => {
 	const ParticpationNumber = useParticipationStore(
 		(state) => state.participationNumber
 	);
-	const Reward = useParticipationStore((state) => state.reward);
-	const setReward = useParticipationStore((state) => state.setReward);
+	const ImageFile = useParticipationStore((state) => state.imageFile);
 	const setMailState = useParticipationStore((state) => state.setMail);
 	const setPhoneNumber = useParticipationStore((state) => state.setPhoneNumber);
 	const setParticipationNumber = useParticipationStore(
@@ -55,40 +52,49 @@ const Participation = () => {
 		return input;
 	}
 
-	const makePostCall = async (): Promise<[number, string]> => {
-		setResponseReward("error");
-		if (!PhoneNumber) return [0, ""];
+	function handleClose() {
+		closeParticipation();
+	}
+
+	const makePostCall = async () => {
+		if (!PhoneNumber) return;
 		setLoading(true);
-		// TODO Check if user already exists, wait for single api call
-		const httpUser =
-			"http://3.231.86.130:3000/api/get/users/byNumber/" + PhoneNumber;
-		await axios.get(httpUser).catch((response) => {
-			console.log(response);
-		});
 
-		// check if 5 tickets have been used
-		const http =
-			"http://3.231.86.130:3000/api/get/users/check-if-user-max-five-today-byUserNumber/" +
-			PhoneNumber;
-		await axios
-			.get(http)
-			.then((response) => {
-				const json = JSON.parse(response.data);
-				console.log(json);
-				if (json.max_five === "true") {
-					setLoading(false);
-					// Show correct description
-					setResponseReward("max_participations");
-					console.log("Max participations");
-					return [0, ""];
-				}
-			})
-			.catch((error) => {
-				if (error != 404) {
-					return [0, ""];
-				}
+		try {
+			const httpUser =
+				"http://3.231.86.130:3000/api/get/users/byNumber/" + PhoneNumber;
+			const httpUserResponse = await axios.get(httpUser);
+			if (httpUserResponse.status == 404) {
+				throw new Error("No user found");
+			}
+			const httpMaxParticipation =
+				"http://3.231.86.130:3000/api/get/users/check-if-user-max-five-today-byUserNumber/" +
+				PhoneNumber;
+			console.log("Check for max participations", httpMaxParticipation);
+			const httpMaxParticipationResponse = await axios.get(
+				httpMaxParticipation
+			);
+			const data = httpMaxParticipationResponse.data;
+			console.log(data);
+			if (data.max_five == true) {
+				console.log("max was reached");
+				setResponseReward("max_participations");
+				setLoading(false);
+				// Show correct description
+				console.log("Max participations");
+				return;
+			}
+		} catch (error) {
+			console.log("Creating New User");
+			const httpNewUser = "http://3.231.86.130:3000/api/post/users/user-upload";
+			await axios.post(httpNewUser, {
+				user_number: PhoneNumber,
+				user_fullname: FullName,
+				user_email: Mail,
+				channel: "web",
 			});
-
+		}
+		//UPLOAD to S3 and receive the URL
 		await axios
 			.post(
 				"http://3.231.86.130:3000/api/post/tickets/ticket-upload",
@@ -112,17 +118,15 @@ const Participation = () => {
 			.catch((error) => {
 				console.log("Failed to make post call");
 				setResponseReward("error");
-				return [0, ""];
 			});
 		setLoading(false);
-		return [0, ""];
 	};
 
 	useEffect(() => {
 		makePostCall().catch((error) => {
 			setLoading(false);
 		});
-	}, [participation, closeParticipation]);
+	}, [participation, closeParticipation, PhoneNumber, Mail, FullName]);
 
 	return (
 		participation && (
@@ -139,10 +143,10 @@ const Participation = () => {
 									src='/images/x.svg'
 									width={20}
 									height={20}
-									alt='Cerrar'
+									alt='X'
 									className='hover:cursor-pointer'
 									onClick={() => {
-										closeParticipation();
+										handleClose();
 									}}
 								/>
 							</div>
