@@ -49,7 +49,7 @@ const Participation = () => {
 
 	function handleClose() {
 		// Reload page to reset state
-		window.location.reload();
+		// window.location.reload();
 		closeParticipation();
 	}
 
@@ -132,7 +132,6 @@ const Participation = () => {
 				console.log("Failed to make post call");
 				setResponseReward("error");
 			});
-		setMailState("");
 		setPhoneNumber("");
 		setLoading(false);
 	};
@@ -173,7 +172,7 @@ const Participation = () => {
 								</div>
 							) : responseReward == "max_participations" ? (
 								<div>
-									Una disculpa, solo se aceptan 5 tickets por persona al dia.
+									Una disculpa, solo se aceptan 5 tickets por persona al día.
 								</div>
 							) : (
 								<div>
@@ -204,18 +203,18 @@ const Participation = () => {
 											</p>
 										) : (
 											<p>
-												Eres el posible ganador de
+												Eres el posible ganador de{" "}
+												{responseReward == "Cupón Cashi de $30.00"
+													? "un"
+													: "una"}{" "}
 												<span className='text-secondary'>{responseReward}</span>
-												. Un mail con los detalles de tu premio será enviado a
-												tu correo electrónico registrado:
+												. Vamos a validar tu ticket y te enviaremos un mail con
+												los detalles de tu premio en un máximo de 72hrs hábiles
+												al correo registrado:
 											</p>
 										)}
 										<p>
 											<span className='text-secondary'>{Mail}</span>
-											<br />
-											<span className='text-xs'>
-												Recuerda checar tu bandeja de spam.
-											</span>
 										</p>
 									</div>
 								</div>
