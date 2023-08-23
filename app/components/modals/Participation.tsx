@@ -49,7 +49,7 @@ const Participation = () => {
 
 	function handleClose() {
 		// Reload page to reset state
-		// window.location.reload();
+		window.location.reload();
 		closeParticipation();
 	}
 
