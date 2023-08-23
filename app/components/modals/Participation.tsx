@@ -6,7 +6,6 @@ import { BarLoader } from "react-spinners";
 import axios from "axios";
 
 const Participation = () => {
-	// TODO: Remove this testReward and testRewardImage
 	const [loading, setLoading] = useState<boolean>(true);
 
 	const [responseReward, setResponseReward] = useState<string>("");
@@ -25,15 +24,11 @@ const Participation = () => {
 	const FullName = useParticipationStore((state) => state.fullName);
 	const Mail = useParticipationStore((state) => state.mail);
 	const PhoneNumber = useParticipationStore((state) => state.phoneNumber);
-	const ParticpationNumber = useParticipationStore(
-		(state) => state.participationNumber
-	);
 	const ImageFile = useParticipationStore((state) => state.imageFile);
+
+	// Setters
 	const setMailState = useParticipationStore((state) => state.setMail);
 	const setPhoneNumber = useParticipationStore((state) => state.setPhoneNumber);
-	const setParticipationNumber = useParticipationStore(
-		(state) => state.setParticipationNumber
-	);
 
 	function mapImage(input: string): string {
 		const mapping: { [key: string]: string } = {
@@ -53,6 +48,8 @@ const Participation = () => {
 	}
 
 	function handleClose() {
+		// Reload page to reset state
+		window.location.reload();
 		closeParticipation();
 	}
 
@@ -70,22 +67,17 @@ const Participation = () => {
 			const httpMaxParticipation =
 				"http://3.231.86.130:3000/api/get/users/check-if-user-max-five-today-byUserNumber/" +
 				PhoneNumber;
-			console.log("Check for max participations", httpMaxParticipation);
 			const httpMaxParticipationResponse = await axios.get(
 				httpMaxParticipation
 			);
 			const data = httpMaxParticipationResponse.data;
-			console.log(data);
 			if (data.max_five == true) {
-				console.log("max was reached");
 				setResponseReward("max_participations");
 				setLoading(false);
 				// Show correct description
-				console.log("Max participations");
 				return;
 			}
 		} catch (error) {
-			console.log("Creating New User");
 			const httpNewUser = "http://3.231.86.130:3000/api/post/users/user-upload";
 			await axios.post(httpNewUser, {
 				user_number: PhoneNumber,
@@ -94,14 +86,35 @@ const Participation = () => {
 				channel: "web",
 			});
 		}
-		//UPLOAD to S3 and receive the URL
+		// S3 api call
+		if (ImageFile == null) {
+			setResponseReward("error");
+			throw new Error("No image found");
+		}
+
+		// Post call
+		const formData = new FormData();
+		formData.append("file", ImageFile);
+
+		const response = await fetch("/api/uploadToS3", {
+			method: "POST",
+			body: formData,
+		});
+
+		if (response.status != 200) {
+			console.log("Upload Error");
+			setResponseReward("error");
+			return;
+		}
+
+		const data = await response.json();
+		const url = data.Url;
 		await axios
 			.post(
 				"http://3.231.86.130:3000/api/post/tickets/ticket-upload",
 				{
 					user_number: PhoneNumber,
-					//TODO link S3
-					ticket_url: "placeholder",
+					ticket_url: url,
 				},
 				{
 					headers: {
@@ -119,6 +132,8 @@ const Participation = () => {
 				console.log("Failed to make post call");
 				setResponseReward("error");
 			});
+		setMailState("");
+		setPhoneNumber("");
 		setLoading(false);
 	};
 
