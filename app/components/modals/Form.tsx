@@ -161,7 +161,8 @@ const Form = () => {
 								onChange={(e) => setMail(e.target.value)}
 							/>
 							<p className='mt-[2px] whitespace-normal text-left text-xs'>
-								* Los premios seran enviados por medio de este correo
+								* Los premios serán enviados a éste correo electrónico
+								proporcionado
 							</p>
 						</div>
 					</div>
