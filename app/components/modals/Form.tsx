@@ -92,9 +92,7 @@ const Form = () => {
 			const httplink =
 				"https://api2.dmente.mx/api/get/tickets/check-how-many-tickets-registered-byDate/" +
 				todayDate;
-			console.log(httplink);
 			const response = await axios.get(httplink);
-			console.log(response.data);
 			setCurrentParticipations(response.data);
 		} catch (error) {
 			setCurrentParticipations(0);

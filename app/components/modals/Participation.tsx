@@ -59,13 +59,13 @@ const Participation = () => {
 
 		try {
 			const httpUser =
-				"http://3.231.86.130:3000/api/get/users/byNumber/" + PhoneNumber;
+				"https://api2.dmente.mx/api/get/users/byNumber/" + PhoneNumber;
 			const httpUserResponse = await axios.get(httpUser);
 			if (httpUserResponse.status == 404) {
 				throw new Error("No user found");
 			}
 			const httpMaxParticipation =
-				"http://3.231.86.130:3000/api/get/users/check-if-user-max-five-today-byUserNumber/" +
+				"https://api2.dmente.mx/api/get/users/check-if-user-max-five-today-byUserNumber/" +
 				PhoneNumber;
 			const httpMaxParticipationResponse = await axios.get(
 				httpMaxParticipation
@@ -78,7 +78,7 @@ const Participation = () => {
 				return;
 			}
 		} catch (error) {
-			const httpNewUser = "http://3.231.86.130:3000/api/post/users/user-upload";
+			const httpNewUser = "https://api2.dmente.mx/api/post/users/user-upload";
 			await axios.post(httpNewUser, {
 				user_number: PhoneNumber,
 				user_fullname: FullName,
@@ -111,7 +111,7 @@ const Participation = () => {
 		const url = data.Url;
 		await axios
 			.post(
-				"http://3.231.86.130:3000/api/post/tickets/ticket-upload",
+				"https://api2.dmente.mx/api/post/tickets/ticket-upload",
 				{
 					user_number: PhoneNumber,
 					ticket_url: url,
