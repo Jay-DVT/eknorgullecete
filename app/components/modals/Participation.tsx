@@ -115,6 +115,7 @@ const Participation = () => {
 				{
 					user_number: PhoneNumber,
 					ticket_url: url,
+					channel: "web",
 				},
 				{
 					headers: {
