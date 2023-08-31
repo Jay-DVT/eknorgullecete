@@ -198,9 +198,9 @@ const Participation = () => {
 										/>
 										{responseReward.includes("pdf") ? (
 											<p>
-												Felicidades haz ganado un
-												<span>recetario digital</span>. Un mail con tu premio ha
-												sido enviado a tu correo electrónico registrado:
+												Felicidades haz ganado un <span>recetario digital</span>
+												. Un mail con tu premio ha sido enviado a tu correo
+												electrónico registrado:
 											</p>
 										) : (
 											<p>
