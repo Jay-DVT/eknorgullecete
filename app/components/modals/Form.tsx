@@ -90,9 +90,11 @@ const Form = () => {
 			const yyyy = today.getFullYear();
 			const todayDate = dd + "-" + mm + "-" + yyyy;
 			const httplink =
-				"http://3.231.86.130:3000/api/get/tickets/check-how-many-tickets-registered-byDate/" +
+				"https://api2.dmente.mx/api/get/tickets/check-how-many-tickets-registered-byDate/" +
 				todayDate;
+			console.log(httplink);
 			const response = await axios.get(httplink);
+			console.log(response.data);
 			setCurrentParticipations(response.data);
 		} catch (error) {
 			setCurrentParticipations(0);
